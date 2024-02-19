@@ -1,1 +1,1 @@
-alert("todo list");
+import "./style.css";
