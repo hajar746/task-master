@@ -1,3 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nanum Gothic Coding", monospace;
+}
+
+/* PAGE LAYOUT */
+main {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.sidebar {
+  grid-row: 1 / 5;
+  grid-column: 1;
+  border: 1px solid #434543;
+}
+
+.task-board {
+  border: 1px solid #434543;
+  grid-row: 1 / 5;
+  grid-column: 2 / 5;
+}
+
+section {
+  padding: 1rem 2rem;
+}
+
+header {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
 .name {
+  display: inline-block;
+}
+
+.logo {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+/* NEW TASK MODAL FORM */
+.modal {
+  padding: 1rem;
+  height: 520px;
+}
+
+input {
+  padding: 0.5rem;
+}
+
+textarea {
+  display: block;
+}
+
+.priority {
+  margin: 1rem 0;
+}
+
+.btn-close-modal {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background-color: white;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.div1 {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.div1 h3 {
+  margin: 0;
+}
+
+#low {
+  background-color: rgba(240, 237, 84, 0.3);
+  border: 2px solid #f9f506;
+  color: #ffea08;
+}
+
+#med {
+  background-color: rgba(255, 132, 0, 0.3);
+  border: 2px solid #f9a006;
+  color: #f9a006;
+}
+
+#high {
+  background-color: rgba(255, 0, 0, 0.3);
+  border: 2px solid #f90606;
+  color: #f90606;
+}
+
+.btn-priority {
+  width: 100px;
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+}
+
+.btn-status {
+  padding: 0.7rem 1.5rem;
+  width: fit-content;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#not {
+  background-color: rgba(67, 69, 67, 0.3);
+  border: 2px solid #434543;
+  color: #434543;
+}
+
+#done {
+  background-color: rgba(12, 205, 6, 0.3);
+  border: 2px solid #07c700;
+  color: #07c700;
+}
+
+.btn-add {
+  margin: 1rem;
+  position: absolute;
+  left: 6rem;
+  font-size: 1rem;
+  padding: 0.7rem 1.5rem;
+  border: 2px solid black;
+  color: black;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* TASKS PAGE */
+.title-alltasks {
   text-align: center;
+  padding: 1rem;
+}
+
+.btn-new {
+  border: 1px solid #85a784;
+  background-color: #ffff;
+  padding: 1rem;
+  margin: 2rem;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  box-shadow: 3px 3px #85a784;
+  cursor: pointer;
 }
