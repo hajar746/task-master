@@ -46,10 +46,14 @@ header {
   height: 3.5rem;
 }
 
-/* NEW TASK MODAL FORM */
+/* NEW TASK FORM */
 .modal {
   padding: 1rem;
   height: 520px;
+}
+
+.task-form h2 {
+  text-align: center;
 }
 
 input {
@@ -60,17 +64,14 @@ textarea {
   display: block;
 }
 
-.priority {
-  margin: 1rem 0;
-}
-
 .btn-close-modal {
   position: absolute;
   right: 1rem;
   top: 1rem;
   background-color: white;
-  padding: 0.5rem;
   cursor: pointer;
+  font-size: 2rem;
+  border: 1px solid black;
 }
 
 .div1 {
@@ -84,58 +85,84 @@ textarea {
   margin: 0;
 }
 
-#low {
+.low {
   background-color: rgba(240, 237, 84, 0.3);
-  border: 2px solid #f9f506;
-  color: #ffea08;
 }
 
-#med {
+.med {
   background-color: rgba(255, 132, 0, 0.3);
-  border: 2px solid #f9a006;
-  color: #f9a006;
 }
 
-#high {
+.high {
   background-color: rgba(255, 0, 0, 0.3);
-  border: 2px solid #f90606;
-  color: #f90606;
 }
 
-.btn-priority {
-  width: 100px;
-  font-size: 1rem;
-  padding: 0.7rem 1.5rem;
-  cursor: pointer;
+.priority,
+.status {
+  margin: 1rem 0;
+  display: flex;
 }
 
-.btn-status {
-  padding: 0.7rem 1.5rem;
-  width: fit-content;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-#not {
-  background-color: rgba(67, 69, 67, 0.3);
+.priority input:checked + span {
   border: 2px solid #434543;
-  color: #434543;
 }
 
-#done {
-  background-color: rgba(12, 205, 6, 0.3);
-  border: 2px solid #07c700;
-  color: #07c700;
+.btn-priority,
+.btn-status {
+  margin: 0.5rem 1rem;
+}
+
+.btn-priority label,
+.btn-status label {
+  float: left;
+  line-height: 2.5rem;
+  width: 8em;
+  height: 3em;
+}
+
+.btn-priority label span,
+.btn-status label span {
+  text-align: center;
+  display: block;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-priority label input,
+.btn-status label input {
+  position: absolute;
+  display: none;
+}
+
+.not {
+  background-color: rgba(67, 69, 67, 0.3);
+}
+
+.done {
+  background-color: rgba(11, 128, 7, 0.3);
+}
+.inprog {
+  background-color: rgba(6, 115, 205, 0.3);
+}
+
+.status input:checked + span {
+  border: 2px solid #434543;
+}
+
+.div-notes {
+  display: flex;
+  gap: 1rem;
 }
 
 .btn-add {
-  margin: 1rem;
-  position: absolute;
-  left: 6rem;
-  font-size: 1rem;
-  padding: 0.7rem 1.5rem;
-  border: 2px solid black;
-  color: black;
+  display: block;
+  width: 150px;
+  margin: 0.8rem auto 0;
+  font-size: 1.2rem;
+  font-family: "Nanum Gothic Coding", monospace;
+  font-weight: 600;
+  padding: 1rem;
+  border: 1px solid black;
   background-color: #fff;
   cursor: pointer;
 }
@@ -155,4 +182,13 @@ textarea {
   font-size: 1.2rem;
   box-shadow: 3px 3px #85a784;
   cursor: pointer;
+}
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 600px) {
+  .priority,
+  .status {
+    display: flex;
+    flex-direction: column;
+  }
 }

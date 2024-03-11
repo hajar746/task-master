@@ -1,5 +1,5 @@
 import "./style.css";
-import { allTasks, newTask, addTask, taskForm } from "./task";
+import { allTasks, getFormData, taskForm, addTask } from "./task";
 
 const board = document.querySelector(".task-board");
 const modal = document.querySelector("dialog");
@@ -27,9 +27,18 @@ window.onload = () => {
   defaultPage();
 
   document.addEventListener("click", function (e) {
-    const target = e.target.closest(".btn-close-modal");
-    if (target) {
+    const targetClose = e.target.closest(".btn-close-modal");
+    const targetAdd = e.target.closest(".btn-add");
+    const form = e.target.closest(".task-form");
+
+    if (targetClose) {
       modal.textContent = "";
+      modal.close();
+    }
+    if (targetAdd) {
+      e.preventDefault();
+      const task1 = getFormData(form);
+      addTask(task1);
       modal.close();
     }
   });
