@@ -31,14 +31,17 @@ window.onload = () => {
     const targetAdd = e.target.closest(".btn-add");
     const form = e.target.closest(".task-form");
 
+    // close form
     if (targetClose) {
       modal.textContent = "";
       modal.close();
     }
-    if (targetAdd) {
+    // add task to local storage
+    if (targetAdd && form.checkValidity()) {
       e.preventDefault();
       const task1 = getFormData(form);
       addTask(task1);
+      modal.textContent = "";
       modal.close();
     }
   });

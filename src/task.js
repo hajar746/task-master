@@ -3,7 +3,7 @@ import { format } from "date-fns";
 export const allTasks = [];
 
 // FACTORY FUNCTION TO CREATE A NEW TASK ///////////////////
-function newTask(title, dueDate = new Date(), priority, notes = "", status) {
+function newTask(title, dueDate, priority, notes = "", status) {
   const task = {};
   task.title = title;
   task.dueDate = format(dueDate, "MM/dd/yy");
@@ -23,19 +23,19 @@ export function taskForm() {
     "beforeend",
     `
     <button class="btn-close-modal">×</button>
-  <form action="#" class="task-form">
+  <form action="#" class="task-form" method='dialog'>
         <h2>New Task</h2>
         <div class='div1'> 
           <label for="title"><h3>Title</h3></label>
           <input type="text" id="title" name='title' required />
              <label for="date"><h3>Due date</h3></label>
-          <input type="date" id="date" name='duedate' required />
+          <input type="date" id="date" name='duedate'/>
         </div>
         <div class='priority'>
           <h3>Priority</h3>
           <div class='btn-priority'>
             <label for='low'>
-              <input type="radio" name='priority' value="low" id='low'><span class='low'>Low</span>
+              <input type="radio" name='priority' value="low" id='low' checked><span class='low'>Low</span>
             </label>
           </div>
           <div class='btn-priority'>
@@ -53,7 +53,7 @@ export function taskForm() {
           <h3>Status</h3>
          <div class='btn-status'>
             <label for='not'>
-              <input type="radio" name='status' value="not-started" id='not'><span class='not'>Not started</span>
+              <input type="radio" name='status' value="not-started" id='not' checked><span class='not'>Not started</span>
             </label>
           </div>
           <div class='btn-status'>
@@ -87,12 +87,12 @@ export function getFormData(form) {
 export function addTask(task) {
   const task1 = newTask(
     task.title,
-    task.duedate,
+    task.duedate || format(new Date(), "MM/dd/yy"),
     task.priority,
     task.notes,
     task.status
   );
 
   const json = JSON.stringify(task1);
-  localStorage.setItem("task", json);
+  localStorage.setItem(task1.title, json);
 }
