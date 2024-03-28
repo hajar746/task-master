@@ -1,22 +1,23 @@
 import "./style.css";
-import { allTasks, getFormData, taskForm, addTask } from "./task";
+import { allTasks, getFormData, taskForm, addTask, addTaskUi } from "./task";
 
 const board = document.querySelector(".task-board");
 const modal = document.querySelector("dialog");
+const divAllTasks = document.querySelector(".alltasks");
 
 // ADDING ELEMENTS TO DEFAULT PAGE
 function defaultPage() {
-  // heading
-  const allTasksTitle = document.createElement("h1");
-  allTasksTitle.textContent = "All Tasks";
-  allTasksTitle.classList.add("title-alltasks");
-  board.appendChild(allTasksTitle);
-
   // button to add new task
   const btnNewTask = document.createElement("btn");
   btnNewTask.textContent = "+Add new task";
   btnNewTask.classList.add("btn-new");
-  board.appendChild(btnNewTask);
+  board.prepend(btnNewTask);
+
+  // heading
+  const allTasksTitle = document.createElement("h1");
+  allTasksTitle.textContent = "All Tasks";
+  allTasksTitle.classList.add("title-alltasks");
+  board.prepend(allTasksTitle);
 
   btnNewTask.addEventListener("click", function () {
     taskForm();
@@ -25,7 +26,9 @@ function defaultPage() {
 
 window.onload = () => {
   defaultPage();
+  addTaskUi(divAllTasks);
 
+  // OPENING/CLOSING FORM AND ADDING TASK TO LOCAL STORAGE
   document.addEventListener("click", function (e) {
     const targetClose = e.target.closest(".btn-close-modal");
     const targetAdd = e.target.closest(".btn-add");

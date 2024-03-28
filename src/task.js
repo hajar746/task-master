@@ -11,10 +11,17 @@ function newTask(title, dueDate, priority, notes = "", status) {
   task.notes = notes;
   task.status = status;
   task.category = "All";
+  // task.addToAllTasks = () => {
+  //   allTasks.push(task);
+  // };
 
-  allTasks.push(task);
   return task;
 }
+
+// add task to array of all tasks /////
+const addToAllTasks = (task) => {
+  allTasks.push(task);
+};
 
 // ADD MODAL FORM /////////////////////////////////////
 export function taskForm() {
@@ -63,7 +70,7 @@ export function taskForm() {
           </div>
           <div class='btn-status'>
             <label for='done'>
-              <input type="checkbox" name='status' value="done" id='done'><span class='done'>Done!</span>
+              <input type="radio" name='status' value="done" id='done'><span class='done'>Done!</span>
             </label>
           </div>
         </div>
@@ -84,15 +91,44 @@ export function getFormData(form) {
 }
 
 // TURN OBJECT INTO A NEW TASK AND ADD INTO LOCAL STORAGE
-export function addTask(task) {
-  const task1 = newTask(
-    task.title,
-    task.duedate || format(new Date(), "MM/dd/yy"),
-    task.priority,
-    task.notes,
-    task.status
+export function addTask(taskObject) {
+  const task = newTask(
+    taskObject.title,
+    taskObject.duedate || format(new Date(), "MM/dd/yy"),
+    taskObject.priority,
+    taskObject.notes,
+    taskObject.status
   );
 
-  const json = JSON.stringify(task1);
-  localStorage.setItem(task1.title, json);
+  addToAllTasks(task);
+
+  const json = JSON.stringify(task);
+  localStorage.setItem(task.title, json);
+}
+
+// ADD TASKS TO UI FROM LOCAL STORAGE /////
+
+export function addTaskUi(div) {
+  for (let [key, value] of Object.entries(localStorage)) {
+    const task = JSON.parse(value);
+    div.insertAdjacentHTML(
+      "afterend",
+      `
+      <div class="task">
+      <div class='task-info'>
+        <div class='task-title'>
+          <input type="checkbox" name="status" value="done" />
+          <h3>${task.title}</h3>
+        </div>
+        <div class="options">
+          <p>${task.dueDate}</p>
+          <img class='icon' src="/src/draw.png" alt="edit/view task">
+          <img class='icon' src="/src/recycle-bin.png" alt="delete task">
+        </div>
+      </div>
+        <p class='task-notes'>${task.notes}</p>
+      </div>
+    `
+    );
+  }
 }

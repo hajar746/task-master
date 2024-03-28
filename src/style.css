@@ -184,6 +184,49 @@ textarea {
   cursor: pointer;
 }
 
+/* UI TASKS */
+.alltasks {
+  margin: 2rem;
+}
+
+.task {
+  margin: 1rem;
+  border: 1px solid #434543;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.task-title {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.task-title h3 {
+  margin: 0.5rem;
+}
+
+.task-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.task .task-notes {
+  margin: 0;
+  padding-left: 2rem;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 /* MEDIA QUERIES */
 @media only screen and (max-width: 600px) {
   .priority,
