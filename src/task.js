@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 
-export const allTasks = [];
+// the latest task created will be stored here (so that we can add to ui)
+const latestTask = [];
 
 // FACTORY FUNCTION TO CREATE A NEW TASK ///////////////////
 function newTask(title, dueDate, priority, notes = "", status) {
@@ -11,15 +12,12 @@ function newTask(title, dueDate, priority, notes = "", status) {
   task.notes = notes;
   task.status = status;
   task.category = "All";
-  // task.addToAllTasks = () => {
-  //   allTasks.push(task);
-  // };
 
   return task;
 }
 
 // add task to array of all tasks /////
-const addToAllTasks = (task) => {
+const addLatestTask = (task) => {
   allTasks.push(task);
 };
 
@@ -90,7 +88,7 @@ export function getFormData(form) {
   return Object.fromEntries(new FormData(form));
 }
 
-// TURN OBJECT INTO A NEW TASK AND ADD INTO LOCAL STORAGE
+// TURN OBJECT INTO A NEW TASK AND ADD INTO LOCAL STORAGE //////////////////
 export function addTask(taskObject) {
   const task = newTask(
     taskObject.title,
@@ -100,30 +98,55 @@ export function addTask(taskObject) {
     taskObject.status
   );
 
-  addToAllTasks(task);
-
+  addLatestTask(task);
   const json = JSON.stringify(task);
   localStorage.setItem(task.title, json);
 }
 
-// ADD TASKS TO UI FROM LOCAL STORAGE /////
+// ADDING NEW TASKS TO UI
+export function addNewTaskUi() {
+  const task = latestTask.pop();
+  const divAllTasks = document.querySelector(".alltasks");
 
+  // create task element
+  divAllTasks.insertAdjacentHTML(
+    "beforeend",
+    `
+      <div class="task" data-id='${task.title}'>
+      <div class='task-info'>
+        <div class='task-title'>
+          <input type="checkbox" name="status" value="done" id='${task.title}' class='task-done'/>
+          <label for="${task.title}" class='task-done-title'>${task.title}</label>
+        </div>
+        <div class="options">
+          <p>${task.dueDate}</p>
+          <img class='icon edit' src="/src/draw.png" alt="edit/view task">
+          <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
+        </div>
+      </div>
+        <p class='task-notes'>${task.notes}</p>
+      </div>
+    `
+  );
+}
+
+// ADD OLD TASKS TO UI FROM LOCAL STORAGE /////
 export function addTaskUi(div) {
   for (let [key, value] of Object.entries(localStorage)) {
     const task = JSON.parse(value);
     div.insertAdjacentHTML(
-      "afterend",
+      "beforeend",
       `
-      <div class="task">
+      <div class="task" data-id='${task.title}'>
       <div class='task-info'>
         <div class='task-title'>
-          <input type="checkbox" name="status" value="done" />
-          <h3>${task.title}</h3>
+          <input type="checkbox" name="status" value="done" id='${task.title}' class='task-done'/>
+          <label for="${task.title}" class='task-done-title'>${task.title}</label>
         </div>
         <div class="options">
           <p>${task.dueDate}</p>
-          <img class='icon' src="/src/draw.png" alt="edit/view task">
-          <img class='icon' src="/src/recycle-bin.png" alt="delete task">
+          <img class='icon edit' src="/src/draw.png" alt="edit/view task">
+          <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
         </div>
       </div>
         <p class='task-notes'>${task.notes}</p>

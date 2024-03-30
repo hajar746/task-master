@@ -1,5 +1,12 @@
 import "./style.css";
-import { allTasks, getFormData, taskForm, addTask, addTaskUi } from "./task";
+import {
+  getFormData,
+  taskForm,
+  addTask,
+  addTaskUi,
+  addNewTaskUi,
+} from "./task";
+import { deleteTask, editTask } from "./editTask";
 
 const board = document.querySelector(".task-board");
 const modal = document.querySelector("dialog");
@@ -28,7 +35,7 @@ window.onload = () => {
   defaultPage();
   addTaskUi(divAllTasks);
 
-  // OPENING/CLOSING FORM AND ADDING TASK TO LOCAL STORAGE
+  // OPENING/CLOSING FORM AND ADDING TASK TO LOCAL STORAGE//////////////
   document.addEventListener("click", function (e) {
     const targetClose = e.target.closest(".btn-close-modal");
     const targetAdd = e.target.closest(".btn-add");
@@ -46,6 +53,13 @@ window.onload = () => {
       addTask(task1);
       modal.textContent = "";
       modal.close();
+      addNewTaskUi();
     }
+  });
+
+  // DELETE TASK////////////////////
+  divAllTasks.addEventListener("click", function (e) {
+    deleteTask(e);
+    editTask(e);
   });
 };

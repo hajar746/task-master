@@ -202,8 +202,9 @@ textarea {
   align-items: center;
 }
 
-.task-title h3 {
-  margin: 0.5rem;
+.task-title label {
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
 .task-info {
@@ -225,6 +226,52 @@ textarea {
 .icon {
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
+}
+
+/* custom checkbox style */
+input[type="checkbox"] {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #000;
+  border: 1px solid #434543;
+  border-radius: 4px;
+  appearance: none;
+  outline: 0;
+  cursor: pointer;
+  transition: 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+  &::before {
+    position: absolute;
+    content: "";
+    display: block;
+    top: 2px;
+    left: 7px;
+    width: 6px;
+    height: 13px;
+    border-style: solid;
+    border-color: #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+  &:checked {
+    color: #fff;
+    border-color: #85a784;
+    background: #85a784;
+    &::before {
+      opacity: 1;
+    }
+    ~ label::before {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    & + label {
+      text-decoration: line-through;
+      color: hsl(0, 0%, 70%);
+      font-weight: 600;
+      background-color: hsl(0, 0%, 97%);
+    }
+  }
 }
 
 /* MEDIA QUERIES */
