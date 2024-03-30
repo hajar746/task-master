@@ -18,7 +18,7 @@ function newTask(title, dueDate, priority, notes = "", status) {
 
 // add task to array of all tasks /////
 const addLatestTask = (task) => {
-  allTasks.push(task);
+  latestTask.push(task);
 };
 
 // ADD MODAL FORM /////////////////////////////////////
