@@ -46,8 +46,16 @@ header {
   height: 3.5rem;
 }
 
+.all-tasks,
+.all-projects,
+.group-high,
+.completed {
+  border-bottom: 2px solid #434543;
+  cursor: pointer;
+}
+
 /* NEW TASK FORM */
-.modal {
+.task-modal {
   padding: 1rem;
   height: 520px;
 }
@@ -64,7 +72,8 @@ textarea {
   display: block;
 }
 
-.btn-close-modal {
+.btn-close-modal,
+.close-view {
   position: absolute;
   right: 1rem;
   top: 1rem;
@@ -89,7 +98,7 @@ textarea {
   background-color: rgba(240, 237, 84, 0.3);
 }
 
-.med {
+.medium {
   background-color: rgba(255, 132, 0, 0.3);
 }
 
@@ -194,6 +203,7 @@ textarea {
   border: 1px solid #434543;
   border-radius: 4px;
   padding: 0.5rem;
+  height: fit-content;
 }
 
 .task-title {
@@ -210,6 +220,7 @@ textarea {
 .task-info {
   display: flex;
   justify-content: space-between;
+  height: 30px;
 }
 
 .options {
@@ -227,6 +238,36 @@ textarea {
   width: 1.5rem;
   height: 1.5rem;
   cursor: pointer;
+}
+
+.ui-status {
+  border: 1px solid #434543;
+  padding: 5px;
+}
+
+.ui-not-started {
+  background-color: rgba(67, 69, 67, 0.3);
+}
+.ui-in-progress {
+  background-color: rgba(6, 115, 205, 0.3);
+}
+.ui-done {
+  background-color: rgba(11, 128, 7, 0.3);
+}
+
+.ui-low {
+  border-left: 5px solid rgba(248, 245, 77, 0.3);
+}
+.ui-medium {
+  border-left: 5px solid rgba(255, 132, 0, 0.3);
+}
+.ui-high {
+  border-left: 5px solid rgba(255, 0, 0, 0.3);
+}
+
+.view-task {
+  padding: 2rem;
+  font-size: 1.2rem;
 }
 
 /* custom checkbox style */

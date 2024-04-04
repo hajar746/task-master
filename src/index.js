@@ -1,18 +1,12 @@
 import "./style.css";
-import {
-  getFormData,
-  taskForm,
-  addTask,
-  addTaskUi,
-  addNewTaskUi,
-} from "./task";
-import { deleteTask, editTask } from "./editTask";
+import { getFormData, addTask, addNewTaskUi, addTasksToUI } from "./task";
+import { deleteTask, ViewTask } from "./taskOptions";
 
 const board = document.querySelector(".task-board");
-const modal = document.querySelector("dialog");
+const modal = document.querySelector(".task-modal");
 const divAllTasks = document.querySelector(".alltasks");
 
-// ADDING ELEMENTS TO DEFAULT PAGE
+// ADDING ELEMENTS TO DEFAULT PAGE ////////////////////
 function defaultPage() {
   // button to add new task
   const btnNewTask = document.createElement("btn");
@@ -27,39 +21,52 @@ function defaultPage() {
   board.prepend(allTasksTitle);
 
   btnNewTask.addEventListener("click", function () {
-    taskForm();
+    modal.showModal();
   });
 }
+//////////////////////////////////////////////////
 
 window.onload = () => {
   defaultPage();
-  addTaskUi(divAllTasks);
+  addTasksToUI(divAllTasks);
 
   // OPENING/CLOSING FORM AND ADDING TASK TO LOCAL STORAGE//////////////
   document.addEventListener("click", function (e) {
     const targetClose = e.target.closest(".btn-close-modal");
     const targetAdd = e.target.closest(".btn-add");
     const form = e.target.closest(".task-form");
+    const closeView = e.target.closest(".close-view");
 
     // close form
     if (targetClose) {
-      modal.textContent = "";
       modal.close();
+      form.reset();
     }
     // add task to local storage
     if (targetAdd && form.checkValidity()) {
       e.preventDefault();
       const task1 = getFormData(form);
       addTask(task1);
-      modal.textContent = "";
       modal.close();
+      form.reset();
       addNewTaskUi();
+    }
+
+    // CLOSE TASK VIEW ////////////////
+    const viewModal = document.querySelector(".view-modal");
+    if (closeView) {
+      viewModal.close();
+      viewModal.textContent = "";
     }
   });
 
-  // DELETE TASK////////////////////
+  // DELETE TASK / EDIT TASK////////////////////
   divAllTasks.addEventListener("click", function (e) {
-    deleteTask(e);
-    editTask(e);
+    const targetTask = e.target.closest(".task");
+    const btnView = e.target.closest(".view");
+    const btndelete = e.target.closest(".delete");
+
+    if (btnView) ViewTask(targetTask);
+    if (btndelete) deleteTask(targetTask);
   });
 };
