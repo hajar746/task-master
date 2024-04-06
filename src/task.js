@@ -4,24 +4,32 @@ import { format } from "date-fns";
 const allTasks = [];
 
 // FACTORY FUNCTION TO CREATE A NEW TASK ///////////////////
-function newTask(title, dueDate, priority, notes = "", status) {
+function newTask(
+  title,
+  dueDate,
+  priority,
+  notes = "",
+  status,
+  category = "All"
+) {
   const task = {};
   task.title = title;
   task.dueDate = format(dueDate, "MM/dd/yy");
   task.priority = priority;
   task.notes = notes;
   task.status = status;
-  task.category = "All";
+  task.category = category;
 
   return task;
 }
+///////////////////////////////////////////////////////////////////
 
-// add task to array of all tasks /////
+// add task to array of all tasks ////////////////
 const addLatestTask = (task) => {
   allTasks.push(task);
 };
 
-// MAKE AN OBJECT USING FORM DATA
+// MAKE AN OBJECT USING FORM DATA //////////////////
 export function getFormData(form) {
   return Object.fromEntries(new FormData(form));
 }
@@ -41,7 +49,7 @@ export function addTask(taskObject) {
   localStorage.setItem(task.title, json);
 }
 
-// ADDING NEW TASKS TO UI
+// ADDING NEW TASK TO UI//////////////////////
 export function addNewTaskUi() {
   const task = allTasks.pop();
   const divAllTasks = document.querySelector(".alltasks");

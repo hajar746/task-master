@@ -1,6 +1,6 @@
 import "./style.css";
-import { getFormData, addTask, addNewTaskUi, addTasksToUI } from "./task";
-import { deleteTask, ViewTask } from "./taskOptions";
+import { addTasksToUI } from "./task";
+import { deleteTask, ViewTask, addNewTaskToLocalStorage } from "./taskControls";
 
 const board = document.querySelector(".task-board");
 const modal = document.querySelector(".task-modal");
@@ -45,11 +45,7 @@ window.onload = () => {
     // add task to local storage
     if (targetAdd && form.checkValidity()) {
       e.preventDefault();
-      const task1 = getFormData(form);
-      addTask(task1);
-      modal.close();
-      form.reset();
-      addNewTaskUi();
+      addNewTaskToLocalStorage(form, modal);
     }
 
     // CLOSE TASK VIEW ////////////////
@@ -60,7 +56,7 @@ window.onload = () => {
     }
   });
 
-  // DELETE TASK / EDIT TASK////////////////////
+  // DELETE TASK / VIEW TASK////////////////////
   divAllTasks.addEventListener("click", function (e) {
     const targetTask = e.target.closest(".task");
     const btnView = e.target.closest(".view");

@@ -1,3 +1,5 @@
+import { addNewTaskUi, addTask, getFormData } from "./task";
+
 // VIEW TASK //////////////
 export function ViewTask(targetTask) {
   const task = JSON.parse(localStorage.getItem(targetTask.dataset.id));
@@ -16,9 +18,21 @@ export function ViewTask(targetTask) {
   );
   viewModal.showModal();
 }
+////////////////////////////////////////////////
 
 // DELETING A TASK FROM LOCAL STORAGE AND THE UI /////////////
 export function deleteTask(targetTask) {
   localStorage.removeItem(targetTask.dataset.id);
   targetTask.remove();
 }
+//////////////////////////////////////////////////
+
+// ADD NEW TASK TO LOCAL STORAGE ///////////////
+export function addNewTaskToLocalStorage(form, modal) {
+  const newTask = getFormData(form);
+  addTask(newTask);
+  modal.close();
+  form.reset();
+  addNewTaskUi();
+}
+///////////////////////////////////////////////
