@@ -54,6 +54,7 @@ export function closeModals() {
   viewModal.close();
   projectModal.close();
   viewModal.textContent = "";
+  projectModal.textContent = "";
 }
 
 // CLEAR PAGE //////////////

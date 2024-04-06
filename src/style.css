@@ -277,6 +277,28 @@ textarea {
 }
 
 /* PROJECT PAGE */
+.project {
+  border: 2px solid #434543;
+  margin: 2rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+}
+
+.btn-project-task {
+  border: 1px solid #85a784;
+  background-color: #ffff;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-shadow: 3px 3px #85a784;
+  cursor: pointer;
+}
+
+.project-name {
+  padding: 0.4rem;
+  margin: 0.4rem;
+}
 
 /* custom checkbox style */
 input[type="checkbox"] {

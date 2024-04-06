@@ -1,4 +1,4 @@
-import { allProjectsPage } from "./projects";
+import { allProjectsPage, addProjectUi } from "./projects";
 import "./style.css";
 import { addTasksToUI } from "./task";
 import {
@@ -42,16 +42,24 @@ window.onload = () => {
   // OPENING/CLOSING FORM AND ADDING TASK TO LOCAL STORAGE//////////////
   document.addEventListener("click", function (e) {
     const targetAdd = e.target.closest(".btn-add");
-    const form = e.target.closest(".task-form");
+    const taskForm = e.target.closest(".task-form");
+    const btnAddProject = e.target.closest(".btn-add-project");
+    const projectForm = e.target.closest(".newproject");
+    const projectName = document.getElementById("p-name");
     const closeView = e.target.closest(".close-view");
 
     // add task to local storage
     if (targetAdd && form.checkValidity()) {
       e.preventDefault();
-      addNewTaskToLocalStorage(form, modal, divAllTasks);
+      addNewTaskToLocalStorage(taskForm, modal, divAllTasks);
     }
     // close modals
     if (closeView) {
+      closeModals();
+    }
+    if (btnAddProject && projectForm.checkValidity()) {
+      e.preventDefault();
+      addProjectUi(projectName.value, divAllProjects);
       closeModals();
     }
   });
