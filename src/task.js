@@ -1,7 +1,8 @@
 import { format } from "date-fns";
+import { addTaskToProject } from "./projects";
 
 // ALL TASKS ////
-const allTasks = [];
+export const allTasks = [];
 
 // FACTORY FUNCTION TO CREATE A NEW TASK ///////////////////
 function newTask(
@@ -41,21 +42,23 @@ export function addTask(taskObject) {
     taskObject.duedate || format(new Date(), "MM/dd/yy"),
     taskObject.priority,
     taskObject.notes,
-    taskObject.status
+    taskObject.status,
+    taskObject.category || "All"
   );
 
   addLatestTask(task);
+  // if task is part of project
+  addTaskToProject(task);
   const json = JSON.stringify(task);
   localStorage.setItem(task.title, json);
 }
 
 // ADDING NEW TASK TO UI//////////////////////
-export function addNewTaskUi() {
-  const task = allTasks.pop();
-  const divAllTasks = document.querySelector(".alltasks");
+export function addNewTaskUi(div) {
+  const task = allTasks[allTasks.length - 1];
 
   // create task element
-  divAllTasks.insertAdjacentHTML(
+  div.insertAdjacentHTML(
     "beforeend",
     `
       <div class="task ui-${task.priority}" data-id='${task.title}'>
@@ -79,9 +82,11 @@ export function addNewTaskUi() {
 
 // ADD OLD TASKS TO UI FROM LOCAL STORAGE ///////////////////////////
 function addStoredTasksToArray() {
-  for (let [key, value] of Object.entries(localStorage)) {
-    const task = JSON.parse(value);
-    allTasks.push(task);
+  if (allTasks.length === 0) {
+    for (let [key, value] of Object.entries(localStorage)) {
+      const task = JSON.parse(value);
+      allTasks.push(task);
+    }
   }
 }
 

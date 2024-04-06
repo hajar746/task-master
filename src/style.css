@@ -163,21 +163,23 @@ textarea {
   gap: 1rem;
 }
 
-.btn-add {
+.btn-add,
+.btn-add-project {
   display: block;
   width: 150px;
   margin: 0.8rem auto 0;
   font-size: 1.2rem;
   font-family: "Nanum Gothic Coding", monospace;
   font-weight: 600;
-  padding: 1rem;
+  padding: 0.8rem;
   border: 1px solid black;
   background-color: #fff;
   cursor: pointer;
 }
 
 /* TASKS PAGE */
-.title-alltasks {
+.title-alltasks,
+.title-allprojects {
   text-align: center;
   padding: 1rem;
 }
@@ -194,8 +196,12 @@ textarea {
 }
 
 /* UI TASKS */
-.alltasks {
-  margin: 2rem;
+.div-alltasks > .task {
+  margin-top: 2rem;
+}
+
+.div-alltasks > .task ~ .task {
+  margin-top: 1rem;
 }
 
 .task {
@@ -269,6 +275,8 @@ textarea {
   padding: 2rem;
   font-size: 1.2rem;
 }
+
+/* PROJECT PAGE */
 
 /* custom checkbox style */
 input[type="checkbox"] {
