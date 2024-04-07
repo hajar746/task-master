@@ -55,7 +55,7 @@ export function addNewProject(name, div) {
   projectTitle.classList.add("project-name");
   const newProjectTask = document.createElement("button");
   newProjectTask.classList.add("btn-project-task");
-  newProjectTask.textContent = "+Add new task";
+  newProjectTask.textContent = "+task";
 
   projectDiv.append(projectTitle, newProjectTask);
   div.append(projectDiv);
@@ -78,7 +78,6 @@ export function addProjectsUi(div) {
         "beforeend",
         `
   <div class='project' data-name='${project.name}'>
-  <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
   <h3 class='project-name'>${project.name}</h3>
   <button class='btn-project-task'>
   +Add new task

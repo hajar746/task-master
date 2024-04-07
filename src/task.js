@@ -86,10 +86,13 @@ export function addNewTaskUi(div) {
 
 // ADD OLD TASKS TO UI, ALLTASKS ARRAY FROM LOCAL STORAGE ///////////////////////////
 export function addTasksToUI(div) {
-  const json = localStorage.getItem("allTasks");
-  const tasksFromLS = JSON.parse(json);
-  allTasks = tasksFromLS;
-  makeTasksElements(div, tasksFromLS || []);
+  if (localStorage.getItem("allTasks")) {
+    const json = localStorage.getItem("allTasks");
+    const tasksFromLS = JSON.parse(json);
+    allTasks = tasksFromLS;
+    makeTasksElements(div, tasksFromLS || []);
+  }
+  addTasksLocalStorage();
 }
 
 function makeTasksElements(div, arr) {
