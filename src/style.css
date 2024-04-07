@@ -25,6 +25,7 @@ main {
   border: 1px solid #434543;
   grid-row: 1 / 5;
   grid-column: 2 / 5;
+  overflow: scroll;
 }
 
 section {
@@ -278,11 +279,12 @@ textarea {
 
 /* PROJECT PAGE */
 .project {
-  border: 2px solid #434543;
+  border: 1px solid #434543;
   margin: 2rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 0.5rem;
+  background-color: rgba(67, 69, 67, 0.1);
 }
 
 .btn-project-task {

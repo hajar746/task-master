@@ -2,7 +2,7 @@ import { addNewTaskUi, addTask, getFormData, allTasks } from "./task";
 
 // VIEW TASK //////////////
 export function ViewTask(targetTask) {
-  const task = JSON.parse(localStorage.getItem(targetTask.dataset.id));
+  const task = allTasks.find((task) => task.title === targetTask.dataset.id);
   const viewModal = document.querySelector(".view-modal");
   viewModal.insertAdjacentHTML(
     "beforeend",
@@ -22,13 +22,12 @@ export function ViewTask(targetTask) {
 
 // DELETING A TASK FROM LOCAL STORAGE, ALL TASKS ARRAY, AND UI /////////////
 export function deleteTask(targetTask) {
-  // remove from localstorage
-  localStorage.removeItem(targetTask.dataset.id);
-  // remove form alltasks
   const index = allTasks.findIndex(
     (task) => task.title === targetTask.dataset.id
   );
   allTasks.splice(index, 1);
+  console.log(allTasks);
+  localStorage.setItem("allTasks", JSON.stringify(allTasks));
   // remove form ui
   targetTask.remove();
 }

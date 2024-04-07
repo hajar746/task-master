@@ -1,4 +1,4 @@
-import { allProjectsPage, addProjectUi } from "./projects";
+import { allProjectsPage, addNewProject, addProjectsUi } from "./projects";
 import "./style.css";
 import { addTasksToUI } from "./task";
 import {
@@ -49,7 +49,7 @@ window.onload = () => {
     const closeView = e.target.closest(".close-view");
 
     // add task to local storage
-    if (targetAdd && form.checkValidity()) {
+    if (targetAdd && taskForm.checkValidity()) {
       e.preventDefault();
       addNewTaskToLocalStorage(taskForm, modal, divAllTasks);
     }
@@ -59,7 +59,7 @@ window.onload = () => {
     }
     if (btnAddProject && projectForm.checkValidity()) {
       e.preventDefault();
-      addProjectUi(projectName.value, divAllProjects);
+      addNewProject(projectName.value, divAllProjects);
       closeModals();
     }
   });
@@ -88,4 +88,5 @@ btnAllProjects.addEventListener("click", function () {
   if (divAllProjects.innerHTML !== "") return;
   clearPage(divAllTasks);
   allProjectsPage(divAllProjects);
+  addProjectsUi(divAllProjects);
 });

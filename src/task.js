@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { addTaskToProject } from "./projects";
 
 // ALL TASKS ////
-export const allTasks = [];
+export let allTasks = [];
 
 // FACTORY FUNCTION TO CREATE A NEW TASK ///////////////////
 function newTask(
@@ -49,8 +49,12 @@ export function addTask(taskObject) {
   addLatestTask(task);
   // if task is part of project
   addTaskToProject(task);
-  const json = JSON.stringify(task);
-  localStorage.setItem(task.title, json);
+  addTasksLocalStorage();
+}
+
+// ADD ALL TASKS TO LOCAL STORAGE /////
+function addTasksLocalStorage() {
+  localStorage.setItem("allTasks", JSON.stringify(allTasks));
 }
 
 // ADDING NEW TASK TO UI//////////////////////
@@ -80,19 +84,16 @@ export function addNewTaskUi(div) {
   );
 }
 
-// ADD OLD TASKS TO UI FROM LOCAL STORAGE ///////////////////////////
-function addStoredTasksToArray() {
-  if (allTasks.length === 0) {
-    for (let [key, value] of Object.entries(localStorage)) {
-      const task = JSON.parse(value);
-      allTasks.push(task);
-    }
-  }
+// ADD OLD TASKS TO UI, ALLTASKS ARRAY FROM LOCAL STORAGE ///////////////////////////
+export function addTasksToUI(div) {
+  const json = localStorage.getItem("allTasks");
+  const tasksFromLS = JSON.parse(json);
+  allTasks = tasksFromLS;
+  makeTasksElements(div, tasksFromLS || []);
 }
 
-export function addTasksToUI(div) {
-  addStoredTasksToArray();
-  for (const task of allTasks) {
+function makeTasksElements(div, arr) {
+  for (const task of arr) {
     div.insertAdjacentHTML(
       "beforeend",
       `

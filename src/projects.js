@@ -1,4 +1,4 @@
-const allProjects = [];
+let allProjects = [];
 const allProjectsTitle = document.createElement("h1");
 
 // ALL PROJECTS PAGE ///////////////
@@ -14,6 +14,15 @@ export function allProjectsPage(div) {
   addNewProjectBtn.addEventListener("click", () => {
     newProjectForm();
   });
+}
+
+// CREATE A NEW PROJECT ///////
+function newProject(name, tasks) {
+  const project = {};
+  project.name = name;
+  project.tasks = tasks;
+
+  return project;
 }
 
 // NEW PROJECT FORM ///////////
@@ -36,10 +45,11 @@ function newProjectForm() {
   projectModal.showModal();
 }
 
-// ADD PROJECT TO UI /////////
-export function addProjectUi(name, div) {
+// ADD NEW PROJECT TO UI AND ALLPROJECTS ARRAY/////////
+export function addNewProject(name, div) {
   const projectDiv = document.createElement("div");
   projectDiv.classList.add("project");
+  projectDiv.dataset.name = name;
   const projectTitle = document.createElement("h3");
   projectTitle.textContent = name;
   projectTitle.classList.add("project-name");
@@ -49,8 +59,53 @@ export function addProjectUi(name, div) {
 
   projectDiv.append(projectTitle, newProjectTask);
   div.append(projectDiv);
+
+  const project = newProject(projectTitle.textContent, []);
+  allProjects.push(project);
+  console.log(allProjects);
+  addProjectsLocalStorage();
 }
 
+// RETRIEVE PROJECTS FROM LOCAL STORAGE AND ADD TO UI ///////////////
+export function addProjectsUi(div) {
+  if (localStorage.getItem("allProjects")) {
+    const json = localStorage.getItem("allProjects");
+    const projectsFromLS = JSON.parse(json);
+    allProjects = projectsFromLS;
+
+    for (const project of allProjects) {
+      div.insertAdjacentHTML(
+        "beforeend",
+        `
+  <div class='project' data-name='${project.name}'>
+  <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
+  <h3 class='project-name'>${project.name}</h3>
+  <button class='btn-project-task'>
+  +Add new task
+  </button>
+  </div>
+  `
+      );
+    }
+  }
+  addProjectsLocalStorage();
+}
+
+// ADD ALL PROJECTS TO LOCAL STORAGE //////////
+function addProjectsLocalStorage() {
+  localStorage.setItem("allProjects", JSON.stringify(allProjects));
+}
+
+// DELETE PROJECT //////
+export function deleteProject(targetProject) {
+  const index = allProjects.findIndex(
+    (project) => project.name === targetProject.dataset.name
+  );
+  allProjects.splice(index, 1);
+  addProjectsLocalStorage();
+  // remove form ui
+  targetProject.remove();
+}
 //  ADD TASK TO PROJECT ///////
 export function addTaskToProject(task) {
   if (task.category !== "All") {
