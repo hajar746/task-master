@@ -1,3 +1,4 @@
+import { ta } from "date-fns/locale";
 import { addNewTaskUi, addTask, getFormData, allTasks } from "./task";
 
 // VIEW TASK //////////////
@@ -26,7 +27,6 @@ export function deleteTask(targetTask) {
     (task) => task.title === targetTask.dataset.id
   );
   allTasks.splice(index, 1);
-  console.log(allTasks);
   localStorage.setItem("allTasks", JSON.stringify(allTasks));
   // remove form ui
   targetTask.remove();
@@ -43,6 +43,31 @@ export function addNewTaskToLocalStorage(form, modal, div) {
 }
 ///////////////////////////////////////////////
 
+// CHECK TASK DONE /////////////
+export function checkTask(targetTask) {
+  const modifiedallTasks = allTasks.map((task) => {
+    if (task.title === targetTask.dataset.id) {
+      return { ...task, status: "done" };
+    }
+    return task;
+  });
+  allTasks = modifiedallTasks;
+  localStorage.setItem("allTasks", JSON.stringify(modifiedallTasks));
+}
+
+// UNCHECK TASK ///////////////////
+export function uncheckTask(targetTask) {
+  const modifiedallTasks = allTasks.map((task) => {
+    if (task.title === targetTask.dataset.id) {
+      return { ...task, status: "in-progress" };
+    }
+    return task;
+  });
+  allTasks = modifiedallTasks;
+  localStorage.setItem("allTasks", JSON.stringify(modifiedallTasks));
+}
+/////////////////////////////////////////
+
 // CLOSE MODALS ///////////////
 export function closeModals() {
   const taskModal = document.querySelector(".task-modal");
@@ -55,6 +80,7 @@ export function closeModals() {
   viewModal.textContent = "";
   projectModal.textContent = "";
 }
+///////////////////////////////////////////////////
 
 // CLEAR PAGE //////////////
 export function clearPage(div) {

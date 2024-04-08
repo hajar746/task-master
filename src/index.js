@@ -1,4 +1,9 @@
-import { allProjectsPage, addNewProject, addProjectsUi } from "./projects";
+import {
+  allProjectsPage,
+  addNewProject,
+  addProjectsUi,
+  deleteProject,
+} from "./projects";
 import "./style.css";
 import { addTasksToUI } from "./task";
 import {
@@ -7,6 +12,8 @@ import {
   addNewTaskToLocalStorage,
   clearPage,
   closeModals,
+  checkTask,
+  uncheckTask,
 } from "./taskControls";
 
 const modal = document.querySelector(".task-modal");
@@ -64,18 +71,30 @@ window.onload = () => {
     }
   });
 
-  // DELETE TASK / VIEW TASK////////////////////
+  // DELETE TASK / VIEW TASK / CHECK A TASK AS DONE ////////////////////
   divAllTasks.addEventListener("click", function (e) {
     const targetTask = e.target.closest(".task");
     const btnView = e.target.closest(".view");
     const btndelete = e.target.closest(".delete");
+    const btnTaskDone = e.target.closest(`.task-done-${targetTask.dataset.id}`);
 
     if (btnView) ViewTask(targetTask);
     if (btndelete) deleteTask(targetTask);
+    if (btnTaskDone && btnTaskDone.checked) checkTask(targetTask);
+    if (btnTaskDone && !btnTaskDone.checked) uncheckTask(targetTask);
+  });
+  //////////////////////////////////////////////////////////////////////
+
+  // DELETING A PROJECT //////////////////////////////////////
+  divAllProjects.addEventListener("click", function (e) {
+    const targetProject = e.target.closest(".project");
+    const btnDeleteProject = e.target.closest(".delete-project");
+
+    if (btnDeleteProject) deleteProject(targetProject);
   });
 };
 
-// GO TO ALL TASKS PAGE ///////////////////
+// GO TO ALL TASKS PAGE /////////////////////////////////////////
 btnAllTasks.addEventListener("click", function () {
   if (divAllTasks.innerHTML !== "") return;
   clearPage(divAllProjects);
@@ -83,7 +102,7 @@ btnAllTasks.addEventListener("click", function () {
   addTasksToUI(divAllTasks);
 });
 
-// GO TO ALL PROJECTS PAGE ////////////////
+// GO TO ALL PROJECTS PAGE ///////////////////////////////////
 btnAllProjects.addEventListener("click", function () {
   if (divAllProjects.innerHTML !== "") return;
   clearPage(divAllTasks);

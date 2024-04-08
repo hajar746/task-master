@@ -53,11 +53,15 @@ export function addNewProject(name, div) {
   const projectTitle = document.createElement("h3");
   projectTitle.textContent = name;
   projectTitle.classList.add("project-name");
+  const btnDeleteProject = document.createElement("img");
+  btnDeleteProject.src = "/src/recycle-bin.png";
+  btnDeleteProject.classList.add("delete-project");
+  btnDeleteProject.classList.add("icon");
   const newProjectTask = document.createElement("button");
   newProjectTask.classList.add("btn-project-task");
   newProjectTask.textContent = "+task";
 
-  projectDiv.append(projectTitle, newProjectTask);
+  projectDiv.append(btnDeleteProject, projectTitle, newProjectTask);
   div.append(projectDiv);
 
   const project = newProject(projectTitle.textContent, []);
@@ -78,6 +82,7 @@ export function addProjectsUi(div) {
         "beforeend",
         `
   <div class='project' data-name='${project.name}'>
+  <img class='icon delete-project' src="/src/recycle-bin.png" alt="delete task">
   <h3 class='project-name'>${project.name}</h3>
   <button class='btn-project-task'>
   +Add new task
@@ -90,7 +95,7 @@ export function addProjectsUi(div) {
   addProjectsLocalStorage();
 }
 
-// ADD ALL PROJECTS TO LOCAL STORAGE //////////
+// UPDATE PROJECTS ARRAY IN LOCAL STORAGE //////////
 function addProjectsLocalStorage() {
   localStorage.setItem("allProjects", JSON.stringify(allProjects));
 }

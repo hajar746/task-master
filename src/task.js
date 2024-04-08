@@ -82,6 +82,10 @@ export function addNewTaskUi(div) {
       </div>
     `
   );
+  const checkbox = document.querySelector(".task-done");
+  if (task.status === "done") {
+    checkbox.checked = true;
+  }
 }
 
 // ADD OLD TASKS TO UI, ALLTASKS ARRAY FROM LOCAL STORAGE ///////////////////////////
@@ -103,7 +107,7 @@ function makeTasksElements(div, arr) {
       <div class="task ui-${task.priority}" data-id='${task.title}'>
       <div class='task-info'>
         <div class='task-title'>
-          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done'/>
+          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done-${task.title}'/>
           <label for="ui-${task.title}" class='task-done-title'>${task.title}</label>
         </div>
         <div class="options">
@@ -118,5 +122,9 @@ function makeTasksElements(div, arr) {
      
     `
     );
+    const checkbox = document.querySelector(`.task-done-${task.title}`);
+    if (task.status === "done") {
+      checkbox.checked = true;
+    }
   }
 }

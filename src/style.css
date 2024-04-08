@@ -285,6 +285,7 @@ textarea {
   padding-left: 1rem;
   padding-right: 0.5rem;
   background-color: rgba(67, 69, 67, 0.1);
+  position: relative;
 }
 
 .btn-project-task {
@@ -300,6 +301,12 @@ textarea {
 .project-name {
   padding: 0.4rem;
   margin: 0.4rem;
+}
+
+.delete-project {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
 }
 
 /* custom checkbox style */
