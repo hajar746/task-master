@@ -1,8 +1,10 @@
+import { tr } from "date-fns/locale";
 import {
   allProjectsPage,
   addNewProject,
   addProjectsUi,
   deleteProject,
+  goToProject,
 } from "./projects";
 import "./style.css";
 import { addTasksToUI } from "./task";
@@ -19,11 +21,16 @@ import {
 const modal = document.querySelector(".task-modal");
 const divAllTasks = document.querySelector(".div-alltasks");
 const divAllProjects = document.querySelector(".div-allprojects");
+const divProject = document.querySelector(".div-project");
 const btnAllProjects = document.querySelector(".all-projects");
 const btnAllTasks = document.querySelector(".all-tasks");
+let tasksPage = false;
+let projectsPage = false;
+let singleProjectPage = false;
 
 // ADDING ELEMENTS TO DEFAULT PAGE ////////////////////
 function defaultPage() {
+  tasksPage = true;
   // button to add new task
   const btnNewTask = document.createElement("btn");
   btnNewTask.textContent = "+Add new task";
@@ -54,9 +61,10 @@ window.onload = () => {
     const projectForm = e.target.closest(".newproject");
     const projectName = document.getElementById("p-name");
     const closeView = e.target.closest(".close-view");
+    const project = e.target.closest(".project");
 
     // add task to local storage
-    if (targetAdd && taskForm.checkValidity()) {
+    if (targetAdd && taskForm.checkValidity() && tasksPage) {
       e.preventDefault();
       addNewTaskToLocalStorage(taskForm, modal, divAllTasks);
     }
@@ -68,6 +76,22 @@ window.onload = () => {
       e.preventDefault();
       addNewProject(projectName.value, divAllProjects);
       closeModals();
+    }
+    if (project) {
+      clearPage(divAllProjects);
+      goToProject(project, divProject);
+      projectsPage = false;
+      singleProjectPage = true;
+    }
+    if (targetAdd && taskForm.checkValidity() && singleProjectPage === true) {
+      const category = document.querySelector(".title-project");
+      e.preventDefault();
+      addNewTaskToLocalStorage(
+        taskForm,
+        modal,
+        divProject,
+        category.textContent
+      );
     }
   });
 
@@ -89,23 +113,30 @@ window.onload = () => {
   divAllProjects.addEventListener("click", function (e) {
     const targetProject = e.target.closest(".project");
     const btnDeleteProject = e.target.closest(".delete-project");
-
     if (btnDeleteProject) deleteProject(targetProject);
   });
 };
 
 // GO TO ALL TASKS PAGE /////////////////////////////////////////
 btnAllTasks.addEventListener("click", function () {
-  if (divAllTasks.innerHTML !== "") return;
+  if (divAllTasks.innerHTML !== "" && tasksPage === true) return;
   clearPage(divAllProjects);
+  clearPage(divProject);
   defaultPage();
   addTasksToUI(divAllTasks);
+  tasksPage = true;
+  projectsPage = false;
+  singleProjectPage = false;
 });
 
 // GO TO ALL PROJECTS PAGE ///////////////////////////////////
 btnAllProjects.addEventListener("click", function () {
-  if (divAllProjects.innerHTML !== "") return;
+  if (divAllProjects.innerHTML !== "" && projectsPage === true) return;
   clearPage(divAllTasks);
+  clearPage(divProject);
   allProjectsPage(divAllProjects);
   addProjectsUi(divAllProjects);
+  projectsPage = true;
+  tasksPage = false;
+  singleProjectPage = false;
 });

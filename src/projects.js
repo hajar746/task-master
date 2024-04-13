@@ -1,3 +1,6 @@
+import { allTasks } from "./task";
+const modal = document.querySelector(".task-modal");
+
 let allProjects = [];
 const allProjectsTitle = document.createElement("h1");
 
@@ -36,7 +39,7 @@ function newProjectForm() {
         <button class="close-view" type='reset'>×</button>
       <h2>New Project</h2>
       <label for="p-name">Enter project name:</label>
-      <input type="text" name="project" id="p-name" required/>
+      <input type="text" name="project" id="p-name"/>
       <button class="btn-add-project">Add</button>
     </form>
     `
@@ -57,16 +60,12 @@ export function addNewProject(name, div) {
   btnDeleteProject.src = "/src/recycle-bin.png";
   btnDeleteProject.classList.add("delete-project");
   btnDeleteProject.classList.add("icon");
-  const newProjectTask = document.createElement("button");
-  newProjectTask.classList.add("btn-project-task");
-  newProjectTask.textContent = "+task";
 
-  projectDiv.append(btnDeleteProject, projectTitle, newProjectTask);
+  projectDiv.append(btnDeleteProject, projectTitle);
   div.append(projectDiv);
 
   const project = newProject(projectTitle.textContent, []);
   allProjects.push(project);
-  console.log(allProjects);
   addProjectsLocalStorage();
 }
 
@@ -84,9 +83,6 @@ export function addProjectsUi(div) {
   <div class='project' data-name='${project.name}'>
   <img class='icon delete-project' src="/src/recycle-bin.png" alt="delete task">
   <h3 class='project-name'>${project.name}</h3>
-  <button class='btn-project-task'>
-  +Add new task
-  </button>
   </div>
   `
       );
@@ -110,12 +106,53 @@ export function deleteProject(targetProject) {
   // remove form ui
   targetProject.remove();
 }
-//  ADD TASK TO PROJECT ///////
-export function addTaskToProject(task) {
-  if (task.category !== "All") {
-    const project = allProjects.findIndex(
-      (project) => project.name === task.category
+
+// GO TO A PROJECT /////
+export function goToProject(targetProject, div) {
+  const projectTasks = allTasks.filter((task) => {
+    return task.category === targetProject.dataset.name;
+  });
+  // page elements
+  const btnBackToAllProjects = document.createElement("button");
+  btnBackToAllProjects.textContent = "⇐ Back to all projects";
+  btnBackToAllProjects.classList.add("btn-back");
+  const projectTitle = document.createElement("h1");
+  projectTitle.textContent = targetProject.dataset.name;
+  projectTitle.classList.add("title-project");
+  const btnNewProjectTask = document.createElement("btn");
+  btnNewProjectTask.textContent = "+Add new task";
+  btnNewProjectTask.classList.add("btn-new");
+  div.prepend(btnBackToAllProjects, projectTitle, btnNewProjectTask);
+
+  btnNewProjectTask.addEventListener("click", () => {
+    modal.showModal();
+  });
+  // add project tasks
+
+  for (const task of projectTasks) {
+    div.insertAdjacentHTML(
+      "beforeend",
+      `
+      <div class="task ui-${task.priority}" data-id='${task.title}'>
+      <div class='task-info'>
+        <div class='task-title'>
+          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done-${task.title}'/>
+          <label for="ui-${task.title}" class='task-done-title'>${task.title}</label>
+        </div>
+        <div class="options">
+         <p class='ui-status ui-${task.status}'>${task.status}</p>
+          <p>${task.dueDate}</p>
+          <img class='icon view' src="/src/view.png" alt="edit/view task">
+          <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
+        </div>
+      </div>
+        <p class='task-notes'>${task.notes}</p>
+      </div>
+    `
     );
-    allProjects[project].push(task);
+    const checkbox = document.querySelector(`.task-done-${task.title}`);
+    if (task.status === "done") {
+      checkbox.checked = true;
+    }
   }
 }

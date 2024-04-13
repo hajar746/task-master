@@ -1,18 +1,10 @@
 import { format } from "date-fns";
-import { addTaskToProject } from "./projects";
 
 // ALL TASKS ////
 export let allTasks = [];
 
 // FACTORY FUNCTION TO CREATE A NEW TASK ///////////////////
-function newTask(
-  title,
-  dueDate,
-  priority,
-  notes = "",
-  status,
-  category = "All"
-) {
+function newTask(title, dueDate, priority, notes = "", status, category) {
   const task = {};
   task.title = title;
   task.dueDate = format(dueDate, "MM/dd/yy");
@@ -36,19 +28,22 @@ export function getFormData(form) {
 }
 
 // TURN OBJECT INTO A NEW TASK AND ADD INTO LOCAL STORAGE //////////////////
-export function addTask(taskObject) {
+export function addTask(taskObject, category) {
+  if (category === "All") {
+    taskObject.category = "All";
+  } else {
+    taskObject.category = category;
+  }
   const task = newTask(
     taskObject.title,
     taskObject.duedate || format(new Date(), "MM/dd/yy"),
     taskObject.priority,
     taskObject.notes,
     taskObject.status,
-    taskObject.category || "All"
+    taskObject.category
   );
 
   addLatestTask(task);
-  // if task is part of project
-  addTaskToProject(task);
   addTasksLocalStorage();
 }
 
@@ -68,7 +63,7 @@ export function addNewTaskUi(div) {
       <div class="task ui-${task.priority}" data-id='${task.title}'>
       <div class='task-info'>
         <div class='task-title'>
-          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done'/>
+          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done-${task.title}'/>
           <label for="ui-${task.title}" class='task-done-title'>${task.title}</label>
         </div>
         <div class="options">
@@ -82,7 +77,7 @@ export function addNewTaskUi(div) {
       </div>
     `
   );
-  const checkbox = document.querySelector(".task-done");
+  const checkbox = document.querySelector(`.task-done-${task.title}`);
   if (task.status === "done") {
     checkbox.checked = true;
   }

@@ -1,4 +1,3 @@
-import { ta } from "date-fns/locale";
 import { addNewTaskUi, addTask, getFormData, allTasks } from "./task";
 
 // VIEW TASK //////////////
@@ -34,9 +33,9 @@ export function deleteTask(targetTask) {
 //////////////////////////////////////////////////
 
 // ADD NEW TASK TO LOCAL STORAGE ///////////////
-export function addNewTaskToLocalStorage(form, modal, div) {
+export function addNewTaskToLocalStorage(form, modal, div, project = "All") {
   const newTask = getFormData(form);
-  addTask(newTask);
+  addTask(newTask, project);
   modal.close();
   form.reset();
   addNewTaskUi(div);

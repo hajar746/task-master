@@ -197,11 +197,13 @@ textarea {
 }
 
 /* UI TASKS */
-.div-alltasks > .task {
+.div-alltasks > .task,
+.div-project > .task {
   margin-top: 2rem;
 }
 
-.div-alltasks > .task ~ .task {
+.div-alltasks > .task ~ .task,
+.div-project > .task ~ .task {
   margin-top: 1rem;
 }
 
@@ -286,9 +288,10 @@ textarea {
   padding-right: 0.5rem;
   background-color: rgba(67, 69, 67, 0.1);
   position: relative;
+  cursor: pointer;
 }
 
-.btn-project-task {
+.project-task {
   border: 1px solid #85a784;
   background-color: #ffff;
   padding: 8px;
@@ -307,6 +310,22 @@ textarea {
   position: absolute;
   right: 1rem;
   top: 1rem;
+}
+
+.title-project {
+  text-align: center;
+  margin-top: 0;
+}
+
+.btn-back {
+  padding: 0.5rem;
+  margin: 1rem;
+  font-size: 0.8rem;
+  border: 1px solid #85a784;
+  background-color: #ffff;
+  box-shadow: 1.5px 1.5px #85a784;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 /* custom checkbox style */
