@@ -27,6 +27,7 @@ const divCompletedTasks = document.querySelector(".div-completedtasks");
 const btnAllProjects = document.querySelector(".all-projects");
 const btnAllTasks = document.querySelector(".all-tasks");
 const btnCompletedTasks = document.querySelector(".completed");
+const menuIcon = document.querySelector(".menu-icon");
 
 let tasksPage = false;
 let projectsPage = false;

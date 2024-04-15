@@ -81,7 +81,7 @@ export function addProjectsUi(div) {
         `
   <div class='project' data-name='${project.name}'>
   <img class='icon delete-project' src="/src/recycle-bin.png" alt="delete task">
-  <h3 class='project-name'>${project.name}</h3>
+  <h2 class='project-name'>${project.name}</h2>
   </div>
   `
       );

@@ -32,10 +32,20 @@ section {
   padding: 1rem 2rem;
 }
 
+section h2 {
+  padding: 0.5rem;
+}
+
+section h2:hover {
+  background-color: #afb7af84;
+}
+
 header {
   display: flex;
   gap: 1rem;
   padding: 1rem;
+  background-color: #85a784;
+  align-items: center;
 }
 
 .name {
@@ -47,12 +57,25 @@ header {
   height: 3.5rem;
 }
 
+.menu-icon {
+  width: 2rem;
+  height: 2rem;
+  display: none;
+}
+
 .all-tasks,
 .all-projects,
 .group-high,
 .completed {
   border-bottom: 2px solid #434543;
   cursor: pointer;
+}
+
+.div-alltasks,
+.div-allprojects,
+.div-project,
+.div-completedtasks {
+  padding: 1rem;
 }
 
 /* NEW TASK FORM */
@@ -178,6 +201,11 @@ textarea {
   cursor: pointer;
 }
 
+.btn-add:hover,
+.btn-add-project:hover {
+  background-color: rgba(67, 69, 67, 0.1);
+}
+
 /* TASKS PAGE */
 .title-alltasks,
 .title-allprojects,
@@ -195,6 +223,10 @@ textarea {
   font-size: 1.2rem;
   box-shadow: 3px 3px #85a784;
   cursor: pointer;
+}
+
+.btn-new:hover {
+  box-shadow: 1.5px 1.5px #85a784;
 }
 
 /* UI TASKS */
@@ -290,6 +322,11 @@ textarea {
   background-color: rgba(67, 69, 67, 0.1);
   position: relative;
   cursor: pointer;
+  border-radius: 5px;
+}
+
+.project:hover {
+  background-color: rgba(67, 69, 67, 0.2);
 }
 
 .project-task {
@@ -380,5 +417,57 @@ input[type="checkbox"] {
   .status {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .sidebar {
+    grid-row: 1;
+    grid-column: 1/5;
+  }
+
+  .task-board {
+    grid-row: 2/ 5;
+    grid-column: 1 / 5;
+  }
+
+  section {
+    background-color: #434543;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  section h2 {
+    font-size: 1.1rem;
+    color: #fff;
+    padding: 0.5rem;
+    margin: 0;
+  }
+
+  .sidebar,
+  .task-board {
+    border: none;
+  }
+
+  .title-allprojects,
+  .title-alltasks,
+  .title-completedtasks,
+  .title-project {
+    margin: 0;
+    padding: 0 0 2rem 0;
+  }
+
+  .div-allprojects,
+  .div-completedtasks,
+  .div-project {
+    padding: 0;
+  }
+
+  .div-alltasks {
+    padding: 1.5rem;
+  }
+
+  .ui-status {
+    display: none;
   }
 }
