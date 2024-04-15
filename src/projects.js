@@ -20,10 +20,9 @@ export function allProjectsPage(div) {
 }
 
 // CREATE A NEW PROJECT ///////
-function newProject(name, tasks) {
+function newProject(name) {
   const project = {};
   project.name = name;
-  project.tasks = tasks;
 
   return project;
 }
@@ -64,7 +63,7 @@ export function addNewProject(name, div) {
   projectDiv.append(btnDeleteProject, projectTitle);
   div.append(projectDiv);
 
-  const project = newProject(projectTitle.textContent, []);
+  const project = newProject(projectTitle.textContent);
   allProjects.push(project);
   addProjectsLocalStorage();
 }
@@ -118,6 +117,7 @@ export function goToProject(targetProject, div) {
   btnBackToAllProjects.classList.add("btn-back");
   const projectTitle = document.createElement("h1");
   projectTitle.textContent = targetProject.dataset.name;
+  projectTitle.dataset.name = targetProject.dataset.name;
   projectTitle.classList.add("title-project");
   const btnNewProjectTask = document.createElement("btn");
   btnNewProjectTask.textContent = "+Add new task";
@@ -133,11 +133,11 @@ export function goToProject(targetProject, div) {
     div.insertAdjacentHTML(
       "beforeend",
       `
-      <div class="task ui-${task.priority}" data-id='${task.title}'>
+      <div class="task ui-${task.priority}" data-id='${task.id}'>
       <div class='task-info'>
         <div class='task-title'>
-          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done-${task.title}'/>
-          <label for="ui-${task.title}" class='task-done-title'>${task.title}</label>
+          <input type="checkbox" name="status" value="done" id='ui-${task.id}' class='task-done-${task.id}'/>
+          <label for="ui-${task.id}" class='task-done-title'>${task.title}</label>
         </div>
         <div class="options">
          <p class='ui-status ui-${task.status}'>${task.status}</p>
@@ -150,7 +150,7 @@ export function goToProject(targetProject, div) {
       </div>
     `
     );
-    const checkbox = document.querySelector(`.task-done-${task.title}`);
+    const checkbox = document.querySelector(`.task-done-${task.id}`);
     if (task.status === "done") {
       checkbox.checked = true;
     }

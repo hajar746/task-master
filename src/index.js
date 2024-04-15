@@ -1,4 +1,3 @@
-import { tr } from "date-fns/locale";
 import {
   allProjectsPage,
   addNewProject,
@@ -19,6 +18,7 @@ import {
 } from "./taskControls";
 
 const modal = document.querySelector(".task-modal");
+const taskDivs = document.querySelectorAll(".container");
 const divAllTasks = document.querySelector(".div-alltasks");
 const divAllProjects = document.querySelector(".div-allprojects");
 const divProject = document.querySelector(".div-project");
@@ -53,7 +53,7 @@ window.onload = () => {
   defaultPage();
   addTasksToUI(divAllTasks);
 
-  // OPENING/CLOSING FORM AND ADDING TASK TO LOCAL STORAGE//////////////
+  //ADDING TASKS AND PROJECTS ////////////////////////////////////
   document.addEventListener("click", function (e) {
     const targetAdd = e.target.closest(".btn-add");
     const taskForm = e.target.closest(".task-form");
@@ -62,8 +62,9 @@ window.onload = () => {
     const projectName = document.getElementById("p-name");
     const closeView = e.target.closest(".close-view");
     const project = e.target.closest(".project");
+    const btnBackToAllProjects = e.target.closest(".btn-back");
 
-    // add task to local storage
+    // add a new task to local storage & UI
     if (targetAdd && taskForm.checkValidity() && tasksPage) {
       e.preventDefault();
       addNewTaskToLocalStorage(taskForm, modal, divAllTasks);
@@ -72,17 +73,20 @@ window.onload = () => {
     if (closeView) {
       closeModals();
     }
+    // add a new project to local storage & UI
     if (btnAddProject && projectForm.checkValidity()) {
       e.preventDefault();
       addNewProject(projectName.value, divAllProjects);
       closeModals();
     }
+    // go to a project task page
     if (project) {
       clearPage(divAllProjects);
       goToProject(project, divProject);
       projectsPage = false;
       singleProjectPage = true;
     }
+    // add a task to a project
     if (targetAdd && taskForm.checkValidity() && singleProjectPage === true) {
       const category = document.querySelector(".title-project");
       e.preventDefault();
@@ -93,19 +97,34 @@ window.onload = () => {
         category.textContent
       );
     }
+    // go back to all projects page
+    if (btnBackToAllProjects) {
+      goToAllProjects();
+    }
   });
+  ///////////////////////////////////////////////////////////////////////
 
   // DELETE TASK / VIEW TASK / CHECK A TASK AS DONE ////////////////////
-  divAllTasks.addEventListener("click", function (e) {
-    const targetTask = e.target.closest(".task");
-    const btnView = e.target.closest(".view");
-    const btndelete = e.target.closest(".delete");
-    const btnTaskDone = e.target.closest(`.task-done-${targetTask.dataset.id}`);
+  taskDivs.forEach(function (div) {
+    div.addEventListener("click", (e) => {
+      const targetTask = e.target.closest(".task");
+      const btnView = e.target.closest(".view");
+      const btndelete = e.target.closest(".delete");
+      const btnTaskDone = e.target.closest(
+        `.task-done-${targetTask.dataset.id}`
+      );
 
-    if (btnView) ViewTask(targetTask);
-    if (btndelete) deleteTask(targetTask);
-    if (btnTaskDone && btnTaskDone.checked) checkTask(targetTask);
-    if (btnTaskDone && !btnTaskDone.checked) uncheckTask(targetTask);
+      if (btnView) ViewTask(targetTask);
+      if (btndelete) deleteTask(targetTask);
+      if (btnTaskDone && btnTaskDone.checked) {
+        checkTask(targetTask);
+        reloadDiv(div);
+      }
+      if (btnTaskDone && !btnTaskDone.checked) {
+        uncheckTask(targetTask);
+        reloadDiv(div);
+      }
+    });
   });
   //////////////////////////////////////////////////////////////////////
 
@@ -132,6 +151,11 @@ btnAllTasks.addEventListener("click", function () {
 // GO TO ALL PROJECTS PAGE ///////////////////////////////////
 btnAllProjects.addEventListener("click", function () {
   if (divAllProjects.innerHTML !== "" && projectsPage === true) return;
+  goToAllProjects();
+});
+
+// FUNCTION TO GO TO ALL PROJECTS PAGE //////////
+function goToAllProjects() {
   clearPage(divAllTasks);
   clearPage(divProject);
   allProjectsPage(divAllProjects);
@@ -139,4 +163,19 @@ btnAllProjects.addEventListener("click", function () {
   projectsPage = true;
   tasksPage = false;
   singleProjectPage = false;
-});
+}
+//////////////////////////////////////////////
+
+// FUNCTION TO RELOAD DIV AFTER TASK IS CHECKED/UNCHECKED (TO UPDATE STATUS) ///////////
+function reloadDiv(div) {
+  if (div.classList.contains("div-alltasks")) {
+    clearPage(div);
+    defaultPage();
+    addTasksToUI(div);
+  }
+  if (div.classList.contains("div-project")) {
+    const title = document.querySelector(".title-project");
+    clearPage(divProject);
+    goToProject(title, div);
+  }
+}

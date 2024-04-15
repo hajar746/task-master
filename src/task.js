@@ -12,6 +12,7 @@ function newTask(title, dueDate, priority, notes = "", status, category) {
   task.notes = notes;
   task.status = status;
   task.category = category;
+  task.id = Math.random().toString(36).substring(2, 9);
 
   return task;
 }
@@ -60,11 +61,11 @@ export function addNewTaskUi(div) {
   div.insertAdjacentHTML(
     "beforeend",
     `
-      <div class="task ui-${task.priority}" data-id='${task.title}'>
+      <div class="task ui-${task.priority}" data-id='${task.id}'>
       <div class='task-info'>
         <div class='task-title'>
-          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done-${task.title}'/>
-          <label for="ui-${task.title}" class='task-done-title'>${task.title}</label>
+          <input type="checkbox" name="status" value="done" id='ui-${task.id}' class='task-done-${task.id}'/>
+          <label for="ui-${task.id}" class='task-done-title'>${task.title}</label>
         </div>
         <div class="options">
          <p class='ui-status ui-${task.status}'>${task.status}</p>
@@ -77,7 +78,7 @@ export function addNewTaskUi(div) {
       </div>
     `
   );
-  const checkbox = document.querySelector(`.task-done-${task.title}`);
+  const checkbox = document.querySelector(`.task-done-${task.id}`);
   if (task.status === "done") {
     checkbox.checked = true;
   }
@@ -99,11 +100,11 @@ function makeTasksElements(div, arr) {
     div.insertAdjacentHTML(
       "beforeend",
       `
-      <div class="task ui-${task.priority}" data-id='${task.title}'>
+      <div class="task ui-${task.priority}" data-id='${task.id}'>
       <div class='task-info'>
         <div class='task-title'>
-          <input type="checkbox" name="status" value="done" id='ui-${task.title}' class='task-done-${task.title}'/>
-          <label for="ui-${task.title}" class='task-done-title'>${task.title}</label>
+          <input type="checkbox" name="status" value="done" id='ui-${task.id}' class='task-done-${task.id}'/>
+          <label for="ui-${task.id}" class='task-done-title'>${task.title}</label>
         </div>
         <div class="options">
           <p class='ui-status ui-${task.status}'>${task.status}</p>
@@ -117,7 +118,7 @@ function makeTasksElements(div, arr) {
      
     `
     );
-    const checkbox = document.querySelector(`.task-done-${task.title}`);
+    const checkbox = document.querySelector(`.task-done-${task.id}`);
     if (task.status === "done") {
       checkbox.checked = true;
     }

@@ -2,12 +2,13 @@ import { addNewTaskUi, addTask, getFormData, allTasks } from "./task";
 
 // VIEW TASK //////////////
 export function ViewTask(targetTask) {
-  const task = allTasks.find((task) => task.title === targetTask.dataset.id);
+  const task = allTasks.find((task) => task.id === targetTask.dataset.id);
   const viewModal = document.querySelector(".view-modal");
   viewModal.insertAdjacentHTML(
     "beforeend",
     `<div class='view-task'>
       <button class="close-view">×</button>
+      <h2>Project: ${task.category}</h2>
       <h2>${task.title}</h2>
       <p>Due date: ${task.dueDate}</p>
       <p>priority <button class="${task.priority}">${task.priority}</button></p>
@@ -22,9 +23,7 @@ export function ViewTask(targetTask) {
 
 // DELETING A TASK FROM LOCAL STORAGE, ALL TASKS ARRAY, AND UI /////////////
 export function deleteTask(targetTask) {
-  const index = allTasks.findIndex(
-    (task) => task.title === targetTask.dataset.id
-  );
+  const index = allTasks.findIndex((task) => task.id === targetTask.dataset.id);
   allTasks.splice(index, 1);
   localStorage.setItem("allTasks", JSON.stringify(allTasks));
   // remove form ui
@@ -45,7 +44,7 @@ export function addNewTaskToLocalStorage(form, modal, div, project = "All") {
 // CHECK TASK DONE /////////////
 export function checkTask(targetTask) {
   const modifiedallTasks = allTasks.map((task) => {
-    if (task.title === targetTask.dataset.id) {
+    if (task.id === targetTask.dataset.id) {
       return { ...task, status: "done" };
     }
     return task;
@@ -57,7 +56,7 @@ export function checkTask(targetTask) {
 // UNCHECK TASK ///////////////////
 export function uncheckTask(targetTask) {
   const modifiedallTasks = allTasks.map((task) => {
-    if (task.title === targetTask.dataset.id) {
+    if (task.id === targetTask.dataset.id) {
       return { ...task, status: "in-progress" };
     }
     return task;
