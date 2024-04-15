@@ -95,11 +95,16 @@ function addProjectsLocalStorage() {
   localStorage.setItem("allProjects", JSON.stringify(allProjects));
 }
 
-// DELETE PROJECT //////
+// DELETE PROJECT AND ITS TASKS//////
 export function deleteProject(targetProject) {
   const index = allProjects.findIndex(
     (project) => project.name === targetProject.dataset.name
   );
+  const modifiedallTasks = allTasks.filter((task) => {
+    return task.category !== targetProject.dataset.name;
+  });
+  allTasks = modifiedallTasks;
+  localStorage.setItem("allTasks", JSON.stringify(modifiedallTasks));
   allProjects.splice(index, 1);
   addProjectsLocalStorage();
   // remove form ui

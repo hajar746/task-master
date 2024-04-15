@@ -180,7 +180,8 @@ textarea {
 
 /* TASKS PAGE */
 .title-alltasks,
-.title-allprojects {
+.title-allprojects,
+.title-completedtasks {
   text-align: center;
   padding: 1rem;
 }

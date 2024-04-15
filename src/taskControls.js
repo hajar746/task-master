@@ -1,4 +1,10 @@
-import { addNewTaskUi, addTask, getFormData, allTasks } from "./task";
+import {
+  addNewTaskUi,
+  addTask,
+  getFormData,
+  allTasks,
+  makeTasksElements,
+} from "./task";
 
 // VIEW TASK //////////////
 export function ViewTask(targetTask) {
@@ -8,8 +14,8 @@ export function ViewTask(targetTask) {
     "beforeend",
     `<div class='view-task'>
       <button class="close-view">×</button>
-      <h2>Project: ${task.category}</h2>
       <h2>${task.title}</h2>
+      <p>Project: ${task.category}<p>
       <p>Due date: ${task.dueDate}</p>
       <p>priority <button class="${task.priority}">${task.priority}</button></p>
       <p>status <button class="${task.status}">${task.status}</button></p>
@@ -65,6 +71,19 @@ export function uncheckTask(targetTask) {
   localStorage.setItem("allTasks", JSON.stringify(modifiedallTasks));
 }
 /////////////////////////////////////////
+
+// COMPLETED TASKS PAGE /////////////////////
+export function goToCompletedTasksPage(div) {
+  const completedTasks = allTasks.filter((task) => {
+    return task.status === "done";
+  });
+  const completedTasksTilte = document.createElement("h1");
+  completedTasksTilte.textContent = "Completed Tasks";
+  completedTasksTilte.classList.add("title-completedtasks");
+  div.append(completedTasksTilte);
+
+  makeTasksElements(div, completedTasks);
+}
 
 // CLOSE MODALS ///////////////
 export function closeModals() {

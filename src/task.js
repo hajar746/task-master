@@ -95,7 +95,7 @@ export function addTasksToUI(div) {
   addTasksLocalStorage();
 }
 
-function makeTasksElements(div, arr) {
+export function makeTasksElements(div, arr) {
   for (const task of arr) {
     div.insertAdjacentHTML(
       "beforeend",

@@ -15,6 +15,7 @@ import {
   closeModals,
   checkTask,
   uncheckTask,
+  goToCompletedTasksPage,
 } from "./taskControls";
 
 const modal = document.querySelector(".task-modal");
@@ -22,11 +23,15 @@ const taskDivs = document.querySelectorAll(".container");
 const divAllTasks = document.querySelector(".div-alltasks");
 const divAllProjects = document.querySelector(".div-allprojects");
 const divProject = document.querySelector(".div-project");
+const divCompletedTasks = document.querySelector(".div-completedtasks");
 const btnAllProjects = document.querySelector(".all-projects");
 const btnAllTasks = document.querySelector(".all-tasks");
+const btnCompletedTasks = document.querySelector(".completed");
+
 let tasksPage = false;
 let projectsPage = false;
 let singleProjectPage = false;
+let completedTasksPage = false;
 
 // ADDING ELEMENTS TO DEFAULT PAGE ////////////////////
 function defaultPage() {
@@ -62,6 +67,7 @@ window.onload = () => {
     const projectName = document.getElementById("p-name");
     const closeView = e.target.closest(".close-view");
     const project = e.target.closest(".project");
+    const deleteBtn = e.target.closest(".delete-project");
     const btnBackToAllProjects = e.target.closest(".btn-back");
 
     // add a new task to local storage & UI
@@ -80,7 +86,7 @@ window.onload = () => {
       closeModals();
     }
     // go to a project task page
-    if (project) {
+    if (project && !deleteBtn) {
       clearPage(divAllProjects);
       goToProject(project, divProject);
       projectsPage = false;
@@ -141,28 +147,45 @@ btnAllTasks.addEventListener("click", function () {
   if (divAllTasks.innerHTML !== "" && tasksPage === true) return;
   clearPage(divAllProjects);
   clearPage(divProject);
+  clearPage(divCompletedTasks);
   defaultPage();
   addTasksToUI(divAllTasks);
   tasksPage = true;
   projectsPage = false;
   singleProjectPage = false;
+  completedTasksPage = false;
 });
 
 // GO TO ALL PROJECTS PAGE ///////////////////////////////////
 btnAllProjects.addEventListener("click", function () {
-  if (divAllProjects.innerHTML !== "" && projectsPage === true) return;
+  if (divAllProjects.innerHTML !== "" && projectsPage) return;
   goToAllProjects();
+});
+
+// GO TO COMPLETED TASKS PAGE ////////////////////////////
+btnCompletedTasks.addEventListener("click", function () {
+  if (divCompletedTasks.innerHTML !== "" && completedTasksPage) return;
+  clearPage(divAllTasks);
+  clearPage(divProject);
+  clearPage(divAllProjects);
+  goToCompletedTasksPage(divCompletedTasks);
+  completedTasksPage = true;
+  projectsPage = false;
+  tasksPage = false;
+  singleProjectPage = false;
 });
 
 // FUNCTION TO GO TO ALL PROJECTS PAGE //////////
 function goToAllProjects() {
   clearPage(divAllTasks);
   clearPage(divProject);
+  clearPage(divCompletedTasks);
   allProjectsPage(divAllProjects);
   addProjectsUi(divAllProjects);
   projectsPage = true;
   tasksPage = false;
   singleProjectPage = false;
+  completedTasksPage = false;
 }
 //////////////////////////////////////////////
 
