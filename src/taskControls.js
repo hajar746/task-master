@@ -38,7 +38,12 @@ export function deleteTask(targetTask) {
 //////////////////////////////////////////////////
 
 // ADD NEW TASK TO LOCAL STORAGE ///////////////
-export function addNewTaskToLocalStorage(form, modal, div, project = "All") {
+export function addNewTaskToLocalStorage(
+  form,
+  modal,
+  div,
+  project = "All tasks"
+) {
   const newTask = getFormData(form);
   addTask(newTask, project);
   modal.close();

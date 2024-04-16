@@ -1,4 +1,4 @@
-import { allTasks } from "./task";
+import { allTasks, makeTasksElements } from "./task";
 const modal = document.querySelector(".task-modal");
 
 let allProjects = [];
@@ -52,11 +52,11 @@ export function addNewProject(name, div) {
   const projectDiv = document.createElement("div");
   projectDiv.classList.add("project");
   projectDiv.dataset.name = name;
-  const projectTitle = document.createElement("h3");
+  const projectTitle = document.createElement("h2");
   projectTitle.textContent = name;
   projectTitle.classList.add("project-name");
-  const btnDeleteProject = document.createElement("img");
-  btnDeleteProject.src = "/src/recycle-bin.png";
+  const btnDeleteProject = document.createElement("p");
+  btnDeleteProject.textContent = "✕";
   btnDeleteProject.classList.add("delete-project");
   btnDeleteProject.classList.add("icon");
 
@@ -80,7 +80,7 @@ export function addProjectsUi(div) {
         "beforeend",
         `
   <div class='project' data-name='${project.name}'>
-  <img class='icon delete-project' src="/src/recycle-bin.png" alt="delete task">
+  <p class='icon delete-project'>✕</p>
   <h2 class='project-name'>${project.name}</h2>
   </div>
   `
@@ -133,31 +133,5 @@ export function goToProject(targetProject, div) {
     modal.showModal();
   });
   // add project tasks
-
-  for (const task of projectTasks) {
-    div.insertAdjacentHTML(
-      "beforeend",
-      `
-      <div class="task ui-${task.priority}" data-id='${task.id}'>
-      <div class='task-info'>
-        <div class='task-title'>
-          <input type="checkbox" name="status" value="done" id='ui-${task.id}' class='task-done-${task.id}'/>
-          <label for="ui-${task.id}" class='task-done-title'>${task.title}</label>
-        </div>
-        <div class="options">
-         <p class='ui-status ui-${task.status}'>${task.status}</p>
-          <p>${task.dueDate}</p>
-          <img class='icon view' src="/src/view.png" alt="edit/view task">
-          <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
-        </div>
-      </div>
-        <p class='task-notes'>${task.notes}</p>
-      </div>
-    `
-    );
-    const checkbox = document.querySelector(`.task-done-${task.id}`);
-    if (task.status === "done") {
-      checkbox.checked = true;
-    }
-  }
+  makeTasksElements(div, projectTasks);
 }

@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-
+const imgView = require("./view.png");
 // ALL TASKS ////
 export let allTasks = [];
 
@@ -30,8 +30,8 @@ export function getFormData(form) {
 
 // TURN OBJECT INTO A NEW TASK AND ADD INTO LOCAL STORAGE //////////////////
 export function addTask(taskObject, category) {
-  if (category === "All") {
-    taskObject.category = "All";
+  if (category === "All tasks") {
+    taskObject.category = "All tasks";
   } else {
     taskObject.category = category;
   }
@@ -70,8 +70,8 @@ export function addNewTaskUi(div) {
         <div class="options">
          <p class='ui-status ui-${task.status}'>${task.status}</p>
           <p>${task.dueDate}</p>
-          <img class='icon view' src="/src/view.png" alt="edit/view task">
-          <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
+          <p class='icon view'>&#9998;</p>
+          <p class='icon delete'>✕</p>
         </div>
       </div>
         <p class='task-notes'>${task.notes}</p>
@@ -109,8 +109,8 @@ export function makeTasksElements(div, arr) {
         <div class="options">
           <p class='ui-status ui-${task.status}'>${task.status}</p>
           <p class='ui-date'>${task.dueDate}</p>
-          <img class='icon view' src="/src/view.png" alt="edit/view task">
-          <img class='icon delete' src="/src/recycle-bin.png" alt="delete task">
+         <p class='icon view'>&#9998;</p>
+          <p class='icon delete'>✕</p>
         </div>
       </div>
         <p class='task-notes'>${task.notes}</p>

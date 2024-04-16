@@ -268,8 +268,7 @@ textarea {
 }
 
 .icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
@@ -301,6 +300,7 @@ textarea {
 .view-task {
   padding: 2rem;
   font-size: 1.2rem;
+  width: 300px;
 }
 
 /* PROJECT PAGE */
@@ -338,7 +338,7 @@ textarea {
 .delete-project {
   position: absolute;
   right: 1rem;
-  top: 1rem;
+  bottom: 0.2rem;
 }
 
 .title-project {
