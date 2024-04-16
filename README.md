@@ -1,6 +1,4 @@
 # task-master
 
-a to-do list app
+a to-do list app built using js, html, css and webpack
 
-Writing icons created by Job Moon - Flaticon
-Dustbin icons created by cah nggunung - Flaticon
